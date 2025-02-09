@@ -11,18 +11,27 @@ public class player : MonoBehaviour
         boxcollider = GetComponent<BoxCollider2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per physics update
+    private void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
+        
+        //set moveDelta
+        moveDelta = new Vector3(x,y,0);
 
-        Debug.Log(x);
-        Debug.Log(y);
+        // make sprite look in direction of movement
+        if (moveDelta.x > 0)
+        {
+            transform.localScale = Vector3.one;
+        }
+        else if (moveDelta.x < 0)
+        {
+            transform.localScale = new Vector3(-1,1,1);
+        }
 
-        // Reset move data
-       // moveDelta = Vector3.Zero;
-
+        // move player
+        transform.Translate(moveDelta * Time.deltaTime);
 
     }
 }
